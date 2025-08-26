@@ -32,12 +32,10 @@ const ResourceCard = ({ resource }) => {
                     <span className="flex items-center">Erstellt: {formattedDate}</span>
                 }
 
-
             </div>
 
         </div>
     );
-
 }
 
 export default ResourceCard;

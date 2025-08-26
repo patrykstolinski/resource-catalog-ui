@@ -15,6 +15,11 @@ function App() {
 
       <main className="container mx-auto px-6 max-w-screen-xl py-8 mt-8">
           <h2 className="text-3xl font-bold mb-10 text-gray-800">Entdecken Sie unsere Ressourcen</h2>
+          <button 
+                    onClick={() => window.location.reload()}
+                    className="mt-2 px-4 py-2 bg-red-500 text-white rounded">
+                    Erneut versuchen
+                </button>
           <ResourceList />
       </main>
 
