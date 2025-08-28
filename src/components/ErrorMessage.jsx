@@ -9,10 +9,11 @@ const ErrorMessage = ( { title, message, hint, variant = "error", children } ) =
 
     return (
         <div className ={`${base} p-6 rounded-r-xl text-center`} role = "alert">
+            {children}
             {title && <strong className="font-bold text-xl block mb-2">{title}</strong> }
             {message && <span className="block text-lg">{message}</span>}
             {hint && <p className={`text-sm mt-3 ${isError ? "text-red-700" : "text-main-dark"}`}>{hint}</p>}
-            {children}
+            
         </div>
     )
 }
