@@ -3,6 +3,7 @@ import LoadingSpinner from "./LoadingSpinner.jsx";
 import BackButton from "./BackButton.jsx";
 import ErrorMessage from "./ErrorMessage.jsx";
 import { formatDate } from "../utils/formatDate.js";
+import FeedbackForm from "./FeedbackForm.jsx";
 
 const ResourceDetail = ({ resourceId, onBack }) => {
 
@@ -65,7 +66,7 @@ const ResourceDetail = ({ resourceId, onBack }) => {
     const formattedDate = formatDate(createdAt,
         "de-DE", {
             hour: '2-digit',
-            minute: '2-digit' 
+            minute: '2-digit'
         }
     );
 
@@ -104,6 +105,7 @@ const ResourceDetail = ({ resourceId, onBack }) => {
     
 
     return (
+        
         <div className="bg-white p-8 rounded-2xl shadow-lg">
             <BackButton onBack={onBack} label="Zurück zu allen Ressourcen"/>
 
@@ -160,6 +162,7 @@ const ResourceDetail = ({ resourceId, onBack }) => {
                     </div>
                 </div>
             )}
+            <FeedbackForm></FeedbackForm>
         </div>
     );
 };
