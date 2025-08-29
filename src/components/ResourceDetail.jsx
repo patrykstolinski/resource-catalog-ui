@@ -78,6 +78,10 @@ const ResourceDetail = ({ resourceId, onBack }) => {
         setDetailResource(updatedResource)
     };
 
+    const handleRatingSubmitted = (updatedResource) => {
+        setDetailResource(updatedResource);
+    }
+
 
     if (isLoadingDetail) {
         return (
@@ -143,10 +147,10 @@ const ResourceDetail = ({ resourceId, onBack }) => {
                         <strong className="mr-2">Durchschnittliches Bewertung:</strong>
                         <span className="font-medium text-gray-700">
                             {averageRating.toFixed(1)} / 5
-                            {/* <span className="ml-2 text-yellow-500">
+                            <span className="ml-2 text-yellow-500">
                                 {"★".repeat(Math.floor(averageRating))}
                                 {averageRating % 1 >= 0.5 ? "⯪" : ""}
-                            </span> */}
+                            </span>
                         </span>
                     </p>
                 )}
@@ -160,10 +164,10 @@ const ResourceDetail = ({ resourceId, onBack }) => {
 
             {/* star rating zeigen  */}
             
-            <div className="border-t border-gray-200 pt-8 mt-8">
+            {/* <div className="border-t border-gray-200 pt-8 mt-8">
                 <h3 className="text-2xl font-bold text-gray-800 mb-6">Ihre Bewertung geben</h3>
-                <StarRating />
-            </div>
+
+            </div> */}
 
             {/*Feedbackeintreage zeigen*/}
             {feedback && feedback.length > 0 && (
@@ -179,6 +183,8 @@ const ResourceDetail = ({ resourceId, onBack }) => {
             {/* Feedback Form  */}
             <div className="border-t border-gray-200 pt-8 mt-8">
                 <h3 className="text-2xl font-bold text-gray">Ihr Feedback teilen</h3>
+                {/* star rating zeigen  */}
+                <div className="py-2"><StarRating resourceId={id} onRatingSubmitted={handleRatingSubmitted} /></div>
                 <FeedbackForm resourceId={id} onFeedbackSubmitted={handleFeedbackSubmitted} />
             </div>
         </div>

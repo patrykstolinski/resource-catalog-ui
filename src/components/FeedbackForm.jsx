@@ -42,7 +42,7 @@ const FeedbackForm = ( { resourceId, onFeedbackSubmitted } ) => {
             }
 
         } catch (err) {
-            console.error("Fehler beim Abrufen der Ressourcen: ", err);
+            console.error("Fehler beim Speichern des Feedbacks: ", err);
             setErrorPost(err.message);
             
         } finally {
@@ -50,7 +50,7 @@ const FeedbackForm = ( { resourceId, onFeedbackSubmitted } ) => {
             setFeedbackText("");
         }
     };
-    
+
     return(
         <form onSubmit={handleSubmit} className="space-y-4">
             { successMessage && (
