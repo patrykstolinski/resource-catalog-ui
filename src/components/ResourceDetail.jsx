@@ -5,6 +5,7 @@ import ErrorMessage from "./ErrorMessage.jsx";
 import { formatDate } from "../utils/formatDate.js";
 import FeedbackForm from "./FeedbackForm.jsx";
 import FeedbackItem from "./FeedbackItem.jsx";
+import StarRating from "./StarRating.jsx";
 
 const ResourceDetail = ({ resourceId, onBack }) => {
 
@@ -142,10 +143,10 @@ const ResourceDetail = ({ resourceId, onBack }) => {
                         <strong className="mr-2">Durchschnittliches Bewertung:</strong>
                         <span className="font-medium text-gray-700">
                             {averageRating.toFixed(1)} / 5
-                            <span className="ml-2 text-yellow-500">
+                            {/* <span className="ml-2 text-yellow-500">
                                 {"★".repeat(Math.floor(averageRating))}
                                 {averageRating % 1 >= 0.5 ? "⯪" : ""}
-                            </span>
+                            </span> */}
                         </span>
                     </p>
                 )}
@@ -156,6 +157,14 @@ const ResourceDetail = ({ resourceId, onBack }) => {
                     </p>
                 )}
             </div>
+
+            {/* star rating zeigen  */}
+            
+            <div className="border-t border-gray-200 pt-8 mt-8">
+                <h3 className="text-2xl font-bold text-gray-800 mb-6">Ihre Bewertung geben</h3>
+                <StarRating />
+            </div>
+
             {/*Feedbackeintreage zeigen*/}
             {feedback && feedback.length > 0 && (
                 <div className="border-t border-gray-200 pt-8 mt-8">
