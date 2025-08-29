@@ -35,6 +35,9 @@ const FeedbackForm = ( { resourceId, onFeedbackSubmitted } ) => {
             }
             const updatedResource = await response.json();
             console.log("Feedback erfolgreich gesendet", updatedResource);
+            if (onFeedbackSubmitted) {
+                onFeedbackSubmitted(updatedResource);
+            }
 
         } catch (err) {
             console.error("Fehler beim Abrufen der Ressourcen: ", err);
