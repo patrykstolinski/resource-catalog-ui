@@ -50,6 +50,7 @@ const FeedbackForm = ( { resourceId, onFeedbackSubmitted } ) => {
             setFeedbackText("");
         }
     };
+    
     return(
         <form onSubmit={handleSubmit} className="space-y-4">
             { successMessage && (
