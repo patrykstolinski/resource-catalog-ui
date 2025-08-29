@@ -4,6 +4,7 @@ import BackButton from "./BackButton.jsx";
 import ErrorMessage from "./ErrorMessage.jsx";
 import { formatDate } from "../utils/formatDate.js";
 import FeedbackForm from "./FeedbackForm.jsx";
+import FeedbackItem from "./FeedbackItem.jsx";
 
 const ResourceDetail = ({ resourceId, onBack }) => {
 
@@ -13,7 +14,7 @@ const ResourceDetail = ({ resourceId, onBack }) => {
     const [notFound, setNotFound] = useState(false);
 
     useEffect(() => {
-        
+
         const fetchResourceDetails = async () => {
             setIsLoadingDetail(true);
             setErrorDetail(null);
@@ -31,7 +32,7 @@ const ResourceDetail = ({ resourceId, onBack }) => {
                         return;
                     }
 
-                    setErrorDetail({code: response.status, message: response.statusText});
+                    setErrorDetail({ code: response.status, message: response.statusText });
                     setIsLoadingDetail(false);
                     setDetailResource(null);
                     return;
@@ -65,9 +66,9 @@ const ResourceDetail = ({ resourceId, onBack }) => {
 
     const formattedDate = formatDate(createdAt,
         "de-DE", {
-            hour: '2-digit',
-            minute: '2-digit'
-        }
+        hour: '2-digit',
+        minute: '2-digit'
+    }
     );
 
     const feedbackCount = feedback?.length || 0;
@@ -79,40 +80,40 @@ const ResourceDetail = ({ resourceId, onBack }) => {
 
     if (isLoadingDetail) {
         return (
-            <LoadingSpinner label = "Ressourcendetails werden geladen..." />
+            <LoadingSpinner label="Ressourcendetails werden geladen..." />
         )
     }
     if (errorDetail) {
         return (
             <ErrorMessage
-            variant="error"
-            title="Ooooops!..."
-            message={`Fehler beim Laden der Ressourcendetails: ${errorDetail}`}
-            hint="Bitte prüfen, ob das Backend unter http://localhost:5002 läuft, oder später erneut versuchen."
+                variant="error"
+                title="Ooooops!..."
+                message={`Fehler beim Laden der Ressourcendetails: ${errorDetail}`}
+                hint="Bitte prüfen, ob das Backend unter http://localhost:5002 läuft, oder später erneut versuchen."
             >
-                <BackButton onBack={onBack} label="Zurück zu allen Ressourcen"/>
+                <BackButton onBack={onBack} label="Zurück zu allen Ressourcen" />
             </ErrorMessage>
-            
+
         );
     }
     if (notFound) {
         return (
             <ErrorMessage
-            variant="info"
-            title="Ressource nicht gefunden"
-            message={`Die Ressource mit ID ${resourceId} konnte nicht gefunden werden.`}
+                variant="info"
+                title="Ressource nicht gefunden"
+                message={`Die Ressource mit ID ${resourceId} konnte nicht gefunden werden.`}
             >
-                <BackButton onBack={onBack} label="Zurück zu allen Ressourcen"/>
+                <BackButton onBack={onBack} label="Zurück zu allen Ressourcen" />
             </ErrorMessage>
         );
     }
-    
+
 
     return (
-        
+
         <div className="bg-white p-8 rounded-2xl shadow-lg">
             {/* Back button to resource list  */}
-            <BackButton onBack={onBack} label="Zurück zu allen Ressourcen"/>
+            <BackButton onBack={onBack} label="Zurück zu allen Ressourcen" />
 
             <h2 className="text-4xl font-extrabold text-main-dark mb-4">{title}</h2>
             <div className="flex items-center space-x-4 mb-6">
@@ -140,12 +141,11 @@ const ResourceDetail = ({ resourceId, onBack }) => {
                     <p className="flex items-center">
                         <strong className="mr-2">Durchschnittliches Bewertung:</strong>
                         <span className="font-medium text-gray-700">
-                            {averageRating.toFixed(1)}
-                        </span>
-
-                        <span className="ml-2 text-yellow-500">
-                            {"★".repeat(Math.floor(averageRating))}
-                            {averageRating % 1 >= 0.5 ? "⯪" : ""}
+                            {averageRating.toFixed(1)} / 5
+                            <span className="ml-2 text-yellow-500">
+                                {"★".repeat(Math.floor(averageRating))}
+                                {averageRating % 1 >= 0.5 ? "⯪" : ""}
+                            </span>
                         </span>
                     </p>
                 )}
@@ -161,24 +161,16 @@ const ResourceDetail = ({ resourceId, onBack }) => {
                 <div className="border-t border-gray-200 pt-8 mt-8">
                     <h3 className="text-2xl font-bold text-gray-800 mb-6">Feedback</h3>
                     <div className="space-y-6">
-                        {feedback.map((item) => (
-                            <div key={item.id} className="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200">
-                                <p className="text-gray-800 mb-2 leading-relaxed">{item.feedbackText}</p>
-                                <div className="text-xs text-gray-500 flex justify-between items-center">
-                                    <span>Von: {item.userId}</span>
-                                    <span>
-                                        {formatDate(item.timestamp)}
-                                    </span>
-                                </div>
-                            </div>
+                        {feedback.slice().reverse().map((item) => (
+                            <FeedbackItem key={item.id} feedback={item} />
                         ))}
                     </div>
                 </div>
             )}
             {/* Feedback Form  */}
             <div className="border-t border-gray-200 pt-8 mt-8">
-            <h3 className="text-2xl font-bold text-gray">Ihr Feedback teilen</h3>
-            <FeedbackForm resourceId={id} onFeedbackSubmitted={handleFeedbackSubmitted}/>
+                <h3 className="text-2xl font-bold text-gray">Ihr Feedback teilen</h3>
+                <FeedbackForm resourceId={id} onFeedbackSubmitted={handleFeedbackSubmitted} />
             </div>
         </div>
     );
