@@ -107,6 +107,7 @@ const ResourceDetail = ({ resourceId, onBack }) => {
     return (
         
         <div className="bg-white p-8 rounded-2xl shadow-lg">
+            {/* Back button to resource list  */}
             <BackButton onBack={onBack} label="Zurück zu allen Ressourcen"/>
 
             <h2 className="text-4xl font-extrabold text-main-dark mb-4">{title}</h2>
@@ -115,6 +116,7 @@ const ResourceDetail = ({ resourceId, onBack }) => {
                     <span className="text-sm font-medium text-highlight-light bg-highlight-light/10 px-3 py-1 rounded-full">{type}</span>
                 )}
             </div>
+            {/* Resource Details  */}
             {description &&
                 <p className="text-gray-700 text-lg leading-relaxed mb-8">{description}</p>}
             <div className="border-t border-gray-200 pt-8 mt-8 text-gray-600 text-sm grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -133,7 +135,14 @@ const ResourceDetail = ({ resourceId, onBack }) => {
                 {averageRating && (
                     <p className="flex items-center">
                         <strong className="mr-2">Durchschnittliches Bewertung:</strong>
-                        <span className="font-medium text-gray-700">{averageRating.toFixed(1)}</span>
+                        <span className="font-medium text-gray-700">
+                            {averageRating.toFixed(1)}
+                        </span>
+
+                        <span className="ml-2 text-yellow-500">
+                            {"★".repeat(Math.floor(averageRating))}
+                            {averageRating % 1 >= 0.5 ? "⯨" : ""}
+                        </span>
                     </p>
                 )}
                 {feedbackCount !== undefined && (
@@ -143,7 +152,7 @@ const ResourceDetail = ({ resourceId, onBack }) => {
                     </p>
                 )}
             </div>
-
+            {/*Feedbackeintreage zeigen*/}
             {feedback && feedback.length > 0 && (
                 <div className="border-t border-gray-200 pt-8 mt-8">
                     <h3 className="text-2xl font-bold text-gray-800 mb-6">Feedback</h3>
@@ -162,7 +171,12 @@ const ResourceDetail = ({ resourceId, onBack }) => {
                     </div>
                 </div>
             )}
-            <FeedbackForm></FeedbackForm>
+            {/* Feedback Form  */}
+            <div className="border-t border-gray-200 pt-8 mt-8">
+            <h3 className="text-2xl font-bold text-gray">Ihr Feedback teilen</h3>
+            <FeedbackForm resourceId={id}/>
+
+            </div>
         </div>
     );
 };
