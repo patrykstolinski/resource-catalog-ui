@@ -175,7 +175,6 @@ const ResourceDetail = ({ resourceId, onBack }) => {
             <div className="border-t border-gray-200 pt-8 mt-8">
             <h3 className="text-2xl font-bold text-gray">Ihr Feedback teilen</h3>
             <FeedbackForm resourceId={id}/>
-
             </div>
         </div>
     );
