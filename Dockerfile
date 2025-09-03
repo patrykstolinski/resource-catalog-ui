@@ -7,7 +7,7 @@ COPY . .
 RUN npm run build
 
 # Schritt 2 - Einen web server konfigurieren und hinzufügen
-FROM nginx:1.29-alpine-slim
+FROM nginx:1.29.1-alpine-slim
 COPY --from=build_stage /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
