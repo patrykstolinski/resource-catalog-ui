@@ -2,62 +2,57 @@ import './index.css';
 import React, { useState } from 'react';
 import ResourceList from './components/ResourceList.jsx';
 import ResourceDetail from './components/ResourceDetail.jsx';
+import { BrowserRouter, Routes, Route, Navigate, Link } from 'react-router-dom';
+import TopicsSkills from './pages/TopicsSkills.jsx';
+import GeneratePath from './pages/GeneratePath.jsx';
+import LearningPaths from './pages/LearningPaths.jsx';
+import LearningPathDetail from './pages/LearningPathDetail.jsx';
+import ResourceDetailPage from './pages/ResourceDetailPage.jsx';
 
-function App() {
-
+function HomeCatalog() {
   const [selectedResourceId, setSelectedResourceId] = useState(null);
-
-  const handleSelectResource = (id) => {
-    setSelectedResourceId(id)
-  };
-
-  const handleBackToList = () => {
-    setSelectedResourceId(null)
-  };
-
-
-
-  const dummyDetailResource = {
-    id: 'detail-1',
-    title: 'Fortgeschrittene React-Patterns',
-    type: 'Buch',
-    description: 'Tauchen Sie tief in Hooks, Context API, Render Props und mehr ein, um robuste und wartbare React-Anwendungen zu erstellen. Dieses Buch bietet praktische Beispiele und Best Practices für erfahrene Entwickler, die ihre Fähigkeiten erweitern möchten.',
-    authorId: 'sophie_dev',
-    createdAt: '2023-03-01T11:45:00Z',
-    averageRating: 4.8,
-    feedback: [
-      { id: 'f1', resourceId: 'detail-1', feedbackText: 'Sehr aufschlussreich und gut erklärt!', userId: 'johndoe', timestamp: '2023-03-05T10:00:00Z' },
-      { id: 'f2', resourceId: 'detail-1', feedbackText: 'Ein Muss für jeden erfahrenen React-Entwickler.', userId: 'janedoe', timestamp: '2023-03-06T15:30:00Z' },
-    ],
-  };
-
   return (
-    <div className="min-h-screen bg-white font-sans antialiased">
-      <header className="bg-main-dark py-6 shadow-xl">
-        <div className="container mx-auto px-6 max-w-screen-xl flex justify-between items-center">
-          <h1 className="text-4xl font-extrabold text-white tracking-tight">Ressourcen-Katalog</h1>
-          <nav></nav>
+    <main className="container mx-auto px-6 max-w-screen-xl py-8 mt-8">
+      {selectedResourceId ? (
+        <ResourceDetail resourceId={selectedResourceId} onBack={() => setSelectedResourceId(null)} />
+      ) : (
+        <div>
+          <h2 className="text-3xl font-bold mb-10 text-gray-800">Entdecken Sie unsere Resourcen</h2>
+          <ResourceList onSelectResource={(id)=>setSelectedResourceId(id)} />
         </div>
-      </header>
-
-      <main className="container mx-auto px-6 max-w-screen-xl py-8 mt-8">
-        {selectedResourceId ? (
-          <ResourceDetail 
-            resourceId={selectedResourceId}
-            onBack={handleBackToList}
-            />
-        ) : (
-          <div>
-            <h2 className="text-3xl font-bold mb-10 text-gray-800">Entecken Sie unsere Ressourcen</h2>
-            <ResourceList onSelectResource={handleSelectResource}/>
-          </div>
-        )}
-
-
-      </main>
-
-    </div>
-  )
+      )}
+    </main>
+  );
 }
 
-export default App
+function App() {
+  return (
+    <BrowserRouter>
+      <div className="min-h-screen bg-white font-sans antialiased">
+        <header className="bg-main-dark py-6 shadow-xl">
+          <div className="container mx-auto px-6 max-w-screen-xl flex justify-between items-center">
+            <h1 className="text-4xl font-extrabold text-white tracking-tight">Ressourcen-Katalog</h1>
+            <nav className="flex gap-3">
+              <Link to="/" className="text-white/90 hover:text-white">Ressourcen</Link>
+              <Link to="/topics-skills" className="text-white/90 hover:text-white">Themen & Skills</Link>
+              <Link to="/generate" className="text-white/90 hover:text-white">Learning Path</Link>
+              <Link to="/paths" className="text-white/90 hover:text-white">Meine Pfade</Link>
+            </nav>
+          </div>
+        </header>
+
+        <Routes>
+          <Route path="/" element={<HomeCatalog />} />
+          <Route path="/topics-skills" element={<TopicsSkills />} />
+          <Route path="/generate" element={<GeneratePath />} />
+          <Route path="/paths" element={<LearningPaths />} />
+          <Route path="/paths/:pathId" element={<LearningPathDetail />} />
+          <Route path="/resources/:id" element={<ResourceDetailPage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
+  );
+}
+
+export default App;
